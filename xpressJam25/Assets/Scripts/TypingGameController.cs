@@ -61,9 +61,17 @@ public class TypingGameModel
             return;
         else if (c == '\n' || c == '\r') // Enter
             return;
+        else if (c == ' ') // Space
+            return;
         else
         {
             gameRows[currentRow] += c;
+            if (getCurrentHintChar() == ' ')
+            {
+                hintRows[currentHintRow] = hintRows[currentHintRow].Substring(0, currentHintColumn) + ' ' + hintRows[currentHintRow].Substring(currentHintColumn);
+                incrementCurrentHintChar();
+            }
+
             if (c == getCurrentHintChar())
             {
                 int pom = currentHintRow;
