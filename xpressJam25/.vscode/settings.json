@@ -51,5 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "xpressJam25.sln"
+    "dotnet.defaultSolution": "xpressJam25.sln",
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
 }
