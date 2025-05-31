@@ -28,6 +28,7 @@ public class NavigationButtonBehaviour : MonoBehaviour
     {
         if (prefab == null) return;
         Instantiate(prefab);
+        prefab.gameObject.SetActive(true);
         Destroy(this.gameObject);
     }
 }
