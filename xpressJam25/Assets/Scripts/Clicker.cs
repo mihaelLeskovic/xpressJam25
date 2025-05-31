@@ -2,6 +2,8 @@ using UnityEngine;
 public class Clicker : MonoBehaviour
 {
     Camera m_Camera;
+    public Canvas whereWeAre;
+    public Canvas whereDoWeGo;
     void Awake()
     {
         m_Camera = Camera.main;
@@ -23,5 +25,8 @@ public class Clicker : MonoBehaviour
     {
         // Code here is called when the Button is clicked on.
         Debug.Log("kliknut");
+        whereDoWeGo.gameObject.SetActive(true);
+        whereWeAre.gameObject.SetActive(false);
+
     }
 }

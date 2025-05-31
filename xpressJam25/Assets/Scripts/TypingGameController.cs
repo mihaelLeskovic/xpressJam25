@@ -11,13 +11,16 @@ public class TypingGameController : MonoBehaviour
     public TextMeshProUGUI gameModelText;
     public TextMeshProUGUI textHintText;
 
+    public Canvas whereWeAre;
+    public Canvas whereDoWeGo;
+
     TypingGameModel gameModel;
 
     public int errorCount = 0;
 
     void Start()
     {
-        gameModel = new TypingGameModel(gameModelText, textHintText, this);
+        gameModel = new TypingGameModel(gameModelText, textHintText, this, whereWeAre, whereDoWeGo);
     }
 
     void Update()
@@ -45,11 +48,16 @@ public class TypingGameModel
     int errorCount = 0;
     TypingGameController controller;
 
-    public TypingGameModel(TextMeshProUGUI gameText, TextMeshProUGUI hintText, TypingGameController controller)
+    Canvas whereWeAreC;
+    Canvas whereDoWeGoC;
+
+    public TypingGameModel(TextMeshProUGUI gameText, TextMeshProUGUI hintText, TypingGameController controller, Canvas whereWeAre, Canvas whereDoWeGo)
     {
         this.controller = controller;
         this.gameText = gameText;
         this.hintText = hintText;
+        this.whereDoWeGoC=whereDoWeGo;
+        this.whereWeAreC=whereWeAre;
         hintRows = hintText.text.ToString().Split("\n").ToList<string>();
         UpdateGameView();
     }
@@ -124,6 +132,9 @@ public class TypingGameModel
 
     void GameFinished()
     {
+        Debug.Log("kliknut");
+        whereDoWeGoC.gameObject.SetActive(true);
+        whereWeAreC.gameObject.SetActive(false);
 
     }
 
