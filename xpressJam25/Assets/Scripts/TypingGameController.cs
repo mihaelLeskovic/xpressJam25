@@ -13,10 +13,11 @@ public class TypingGameController : MonoBehaviour
 
     TypingGameModel gameModel;
 
+    public int errorCount = 0;
 
     void Start()
     {
-        gameModel = new TypingGameModel(gameModelText, textHintText);
+        gameModel = new TypingGameModel(gameModelText, textHintText, this);
     }
 
     void Update()
@@ -41,13 +42,16 @@ public class TypingGameModel
     int currentHintColumn = 0;
     TextMeshProUGUI gameText;
     TextMeshProUGUI hintText;
+    int errorCount = 0;
+    TypingGameController controller;
 
-    public TypingGameModel(TextMeshProUGUI gameText, TextMeshProUGUI hintText)
+    public TypingGameModel(TextMeshProUGUI gameText, TextMeshProUGUI hintText, TypingGameController controller)
     {
+        this.controller = controller;
         this.gameText = gameText;
         this.hintText = hintText;
         hintRows = hintText.text.ToString().Split("\n").ToList<string>();
-        UpdateView();
+        UpdateGameView();
     }
 
     public void Process(char c)
@@ -55,42 +59,36 @@ public class TypingGameModel
         int currentRow = gameRows.Count - 1;
 
         if (c == '\b') // Backspace
-        {
             return;
-            // if (rows[currentRow].Length > 0)
-            //     rows[currentRow] = rows[currentRow].Substring(0, rows[currentRow].Length - 1);
-            // else if (currentRow > 0)
-            //     rows.RemoveAt(currentRow); // remove empty row
-        }
         else if (c == '\n' || c == '\r') // Enter
-        {
             return;
-            // rows.Add("");
-        }
         else
         {
             gameRows[currentRow] += c;
+            if (c == getCurrentHintChar())
+            {
+                int pom = currentHintRow;
+                incrementCurrentHintChar();
+                if (pom != currentHintRow)
+                {
+                    gameRows.Add("");
+                }
+
+            }
+            else
+            {
+                //dodaj u hintText na tom mjestu
+                hintRows[currentHintRow] = hintRows[currentHintRow].Substring(0, currentHintColumn) + c + hintRows[currentHintRow].Substring(currentHintColumn);
+                incrementCurrentHintChar();
+
+                //increment error
+                errorCount++;
+                controller.errorCount = this.errorCount;
+            }
         }
 
-        UpdateView();
-    }
-
-    bool offerCharToHint(char c)
-    {
-        if (c == getCurrentHintChar())
-        {
-            //dodaj u gameText
-            //incrementCurrentHintChar
-            return true;
-        }
-        else
-        {
-
-            //dodaj u gameText
-            //dodaj u hintText na tom mjestu
-            //increment error
-            return false;
-        }
+        UpdateGameView();
+        UpdateHintView();
     }
 
     void incrementCurrentHintChar()
@@ -109,9 +107,14 @@ public class TypingGameModel
         return hintRows[currentHintRow][currentHintColumn];
     }
 
-    void UpdateView()
+    void UpdateGameView()
     {
         gameText.text = string.Join("\n", gameRows);
+    }
+
+    void UpdateHintView()
+    {
+        hintText.text = string.Join("\n", hintRows);
     }
 
     public string GetRow(int index)
