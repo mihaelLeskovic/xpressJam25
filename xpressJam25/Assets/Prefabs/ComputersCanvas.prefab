@@ -239,7 +239,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8935136354245574562}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Clicker, Assembly-CSharp
         m_MethodName: OnButtonClick
         m_Mode: 1
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 963734988267087180}
   - component: {fileID: 1903140730699378172}
   - component: {fileID: 4124015553117756453}
-  - component: {fileID: 8935136354245574562}
+  - component: {fileID: 2357470925084197421}
   m_Layer: 5
   m_Name: ComputersCanvas
   m_TagString: Untagged
@@ -391,7 +391,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8935136354245574562
+--- !u!114 &2357470925084197421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -400,6 +400,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8941306726179716772}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ab93f4f4c3f5634384ab4c3a8251d1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 674e98b140d723545bb070b2322c67ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextPrefab: {fileID: 0}
+  previousPrefab: {fileID: 0}
+  showExitButton: 1
