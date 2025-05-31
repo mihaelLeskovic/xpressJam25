@@ -57,62 +57,90 @@ public class TypingGameModel
     {
         int currentRow = gameRows.Count - 1;
 
-        if (c == '\b') // Backspace
+        if (c == '\b' || c == '\n' || c == '\r' || c == ' ')
             return;
-        else if (c == '\n' || c == '\r') // Enter
-            return;
-        else if (c == ' ') // Space
-            return;
-        else
-        {
-            gameRows[currentRow] += c;
-            if (getCurrentHintChar() == ' ')
-            {
-                hintRows[currentHintRow] = hintRows[currentHintRow].Substring(0, currentHintColumn) + ' ' + hintRows[currentHintRow].Substring(currentHintColumn);
-                incrementCurrentHintChar();
-            }
 
-            if (c == getCurrentHintChar())
+        // Step 1: Pre-skip and insert all spaces from hint
+        while (getCurrentHintChar() == ' ')
+        {
+            gameRows[currentRow] += ' ';
+            incrementCurrentHintChar();
+            if (currentHintRow != currentRow) // row advanced
             {
-                int pom = currentHintRow;
-                incrementCurrentHintChar();
-                if (pom != currentHintRow)
+                currentRow = gameRows.Count - 1;
+            }
+        }
+
+        // Step 2: Add typed char
+        gameRows[currentRow] += c;
+
+        if (c == getCurrentHintChar())
+        {
+            int oldRow = currentHintRow;
+            incrementCurrentHintChar();
+
+            // Step 3: Post-skip spaces too (including newlines)
+            while (getCurrentHintChar() == ' ')
+            {
+                if (currentHintRow != oldRow)
                 {
                     gameRows.Add("");
+                    currentRow++;
                 }
-
-            }
-            else
-            {
-                //dodaj u hintText na tom mjestu
-                hintRows[currentHintRow] = hintRows[currentHintRow].Substring(0, currentHintColumn) + c + hintRows[currentHintRow].Substring(currentHintColumn);
+                gameRows[currentRow] += ' ';
                 incrementCurrentHintChar();
-
-                //increment error
-                errorCount++;
-                controller.errorCount = this.errorCount;
             }
+
+            if (currentHintRow != oldRow)
+            {
+                gameRows.Add("");
+            }
+        }
+        else
+        {
+            // Mistake: insert typed char into hint and count error
+            hintRows[currentHintRow] = hintRows[currentHintRow].Substring(0, currentHintColumn) + c + hintRows[currentHintRow].Substring(currentHintColumn);
+            incrementCurrentHintChar();
+            errorCount++;
+            controller.errorCount = this.errorCount;
         }
 
         UpdateGameView();
         UpdateHintView();
     }
 
+
+
+    void SkipHintSpaces()
+    {
+        while (currentHintRow < hintRows.Count && currentHintColumn < hintRows[currentHintRow].Length &&
+               hintRows[currentHintRow][currentHintColumn] == ' ')
+        {
+            incrementCurrentHintChar();
+        }
+    }
+
     void incrementCurrentHintChar()
     {
         currentHintColumn++;
-        if (currentHintColumn >= hintRows[currentHintRow].Length)
+        if (currentHintRow < hintRows.Count && currentHintColumn >= hintRows[currentHintRow].Length)
         {
             currentHintColumn = 0;
             currentHintRow++;
         }
-        if (currentHintRow >= hintRows.Count) GameFinished();
+        if (currentHintRow >= hintRows.Count)
+        {
+            GameFinished();
+        }
     }
 
     char getCurrentHintChar()
     {
+        if (currentHintRow >= hintRows.Count || currentHintColumn >= hintRows[currentHintRow].Length)
+            return '\0';
         return hintRows[currentHintRow][currentHintColumn];
     }
+
 
     void UpdateGameView()
     {
