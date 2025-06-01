@@ -16,9 +16,7 @@ public class AI_ImageController : MonoBehaviour
 
     int GetSpriteNumber()
     {
-        //dohvati pomocu sanityja
-        float magicNumber = 0.1f;
 
-        return (int)magicNumber * sprites.Length;
+        return ActivityManager.Instance.taskCounter;
     }
 }
