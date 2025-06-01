@@ -21,6 +21,7 @@ public class MainMenu : MonoBehaviour
     {
         Instantiate(firstScreenCanvasPrefab);
         Destroy(this.gameObject);
+        AudioPlayer.Instance.PlayDefaultSound();
     }
 
     public void OnExitClicked()

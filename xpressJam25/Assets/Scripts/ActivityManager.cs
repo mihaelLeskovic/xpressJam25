@@ -7,6 +7,10 @@ public class ActivityManager : MonoBehaviour
 
     Stack<GameObject> inactiveStack = new Stack<GameObject>();
 
+    public int taskCounter = 0;
+
+
+
     void Awake()
     {
         if (Instance != null && Instance != this)

@@ -11,12 +11,14 @@ public class TypingGameController : MonoBehaviour
     public TextMeshProUGUI gameModelText;
     public TextMeshProUGUI textHintText;
     public int errorCount = 0;
+    public TextMeshProUGUI[] texts;
 
     TypingGameModel gameModel;
 
     void Start()
     {
-        gameModel = new TypingGameModel(gameModelText, textHintText, this);
+        gameModel = new TypingGameModel(gameModelText, textHintText, this, ActivityManager.Instance.taskCounter >= texts.Length ? null : texts[ActivityManager.Instance.taskCounter].text);
+        // if (ActivityManager.Instance.taskCounter >= texts.Length) gameModel.GameFinished();
     }
 
     void Update()
@@ -44,12 +46,14 @@ public class TypingGameModel
     int errorCount = 0;
     TypingGameController controller;
 
-    public TypingGameModel(TextMeshProUGUI gameText, TextMeshProUGUI hintText, TypingGameController controller)
+    public TypingGameModel(TextMeshProUGUI gameText, TextMeshProUGUI hintText, TypingGameController controller, string text)
     {
+        if (text == null) GameFinished();
         this.controller = controller;
         this.gameText = gameText;
         this.hintText = hintText;
-        hintRows = hintText.text.ToString().Split("\n").ToList<string>();
+        hintRows = text.ToString().Split("\n").ToList<string>();
+        UpdateHintView();
         UpdateGameView();
     }
 
@@ -154,9 +158,10 @@ public class TypingGameModel
         return (index >= 0 && index < gameRows.Count) ? gameRows[index] : "";
     }
 
-    void GameFinished()
+    public void GameFinished()
     {
         ActivityManager.Instance.PopFromInactiveStack();
+        ActivityManager.Instance.taskCounter++;
         GameObject.Destroy(controller.gameObject);
     }
 

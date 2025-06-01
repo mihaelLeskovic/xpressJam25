@@ -10,6 +10,14 @@ public class AudioPlayer : MonoBehaviour
     public AudioClip[] clips;
     private Dictionary<string, AudioClip> clipDict;
 
+    void LateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -40,7 +48,7 @@ public class AudioPlayer : MonoBehaviour
 
     public void PlayDefaultSound()
     {
-        PlaySound("mainmenu");
+        PlaySound("normalno");
     }
 
     public void PlaySound(string clipName)
