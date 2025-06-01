@@ -68,8 +68,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 6deba5085513bdf48800e092595a8fdf, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextPrefab: {fileID: 4273997788636194169, guid: f80770d78894aad4a9a18f0321ef5477, type: 3}
-  previousPrefab: {fileID: 8941306726179716772, guid: 580e2f3543e21b441b4054ecc0ed69b0, type: 3}
+  previousPrefab: {fileID: 9025721001778503399, guid: a69ab915799f3bc4ab9da0f8d9d76743, type: 3}
   showExitButton: 1
 --- !u!114 &7315079746524111666
 MonoBehaviour:
@@ -489,8 +489,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: dde8b2cd0ad34e247ad0847caa0279e3, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
