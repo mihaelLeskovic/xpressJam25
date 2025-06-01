@@ -107,18 +107,15 @@ public class TypingGameModel
 
         UpdateGameView();
         UpdateHintView();
-    }
 
-
-
-    void SkipHintSpaces()
-    {
-        while (currentHintRow < hintRows.Count && currentHintColumn < hintRows[currentHintRow].Length &&
-               hintRows[currentHintRow][currentHintColumn] == ' ')
+        if (currentHintRow >= hintRows.Count)
         {
-            incrementCurrentHintChar();
+            GameFinished();
         }
     }
+
+
+
 
     void incrementCurrentHintChar()
     {
@@ -128,10 +125,10 @@ public class TypingGameModel
             currentHintColumn = 0;
             currentHintRow++;
         }
-        if (currentHintRow >= hintRows.Count)
-        {
-            GameFinished();
-        }
+        // if (currentHintRow >= hintRows.Count)
+        // {
+        //     GameFinished();
+        // }
     }
 
     char getCurrentHintChar()
